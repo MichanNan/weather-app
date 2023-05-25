@@ -64,12 +64,9 @@ function App() {
         <div className="temperature">{`${weather.temperature}°C`}</div>
       </header>
       <Form onAddActivity={handleAddActivity} />
-      {weather.isGoodWeather ? (
-        <p>The weather is awesome! Go outside and:</p>
-      ) : (
-        <p>Bad weather outside! Here's what you can do now:</p>
-      )}
+
       <List
+        goodWeather={weather.isGoodWeather}
         activities={filterActivities}
         onDeleteActivity={handleDeleteActivity}
       ></List>
