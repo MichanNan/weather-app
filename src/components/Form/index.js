@@ -1,3 +1,4 @@
+import "./Form.css";
 export default function Form({ onAddActivity }) {
   function handleSubmit(e) {
     e.preventDefault();
@@ -8,14 +9,17 @@ export default function Form({ onAddActivity }) {
   return (
     <form className="form" onSubmit={handleSubmit}>
       <header className="form-header"></header>
-      <label htmlFor="activity">Name</label>
+      <label htmlFor="activity">Activity Name</label>
       <input name="activity" className="form-activity"></input>
-      <label htmlFor="isForGoodWeather">Good-Weather activity</label>
-      <input
-        name="isForGoodWeather"
-        className="form-is-for-good-weather"
-        type="checkbox"
-      ></input>
+      <label htmlFor="isForGoodWeather">
+        <input
+          name="isForGoodWeather"
+          className="form-is-for-good-weather"
+          type="checkbox"
+        ></input>{" "}
+        Good-Weather activity{" "}
+      </label>
+
       <button className="form-submit">Submit</button>
     </form>
   );

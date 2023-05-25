@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import useLocalStorageState from "use-local-storage-state";
 import { uid } from "uid";
 import Form from "./components/Form/index.js";
 import List from "./components/List/index.js";
@@ -6,7 +7,9 @@ import "./App.css";
 
 function App() {
   const initialActivities = [];
-  const [activities, setActivities] = useState(initialActivities);
+  const [activities, setActivities] = useLocalStorageState("activities", {
+    defaultValue: initialActivities,
+  });
   const initialWeather = { temperature: "0", condition: "" };
   const [weather, setWeather] = useState(initialWeather);
 
@@ -21,7 +24,6 @@ function App() {
         isForGoodWeather: data.isForGoodWeather === "on" ? true : false,
       },
     ]);
-    console.log(activities);
   }
 
   const filterActivities = activities.filter(
@@ -40,6 +42,7 @@ function App() {
         console.log("ERROR!");
       }
     }
+    fetchWeather();
     const timer = setInterval(fetchWeather, 5000);
     return () => {
       clearInterval(timer);
@@ -52,11 +55,16 @@ function App() {
   }
   return (
     <>
-      <header>
-        {weather.temperature}
-        {weather.condition}
+      <header className="header">
+        <div className="condition">{weather.condition}</div>
+        <div className="temperature">{`${weather.temperature}°C`}</div>
       </header>
       <Form onAddActivity={handleAddActivity} />
+      {weather.isGoodWeather ? (
+        <p>The weather is awesome! Go outside and:</p>
+      ) : (
+        <p>Bad weather outside! Here's what you can do now:</p>
+      )}
       <List
         activities={filterActivities}
         onDeleteActivity={handleDeleteActivity}
