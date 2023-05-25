@@ -1,10 +1,10 @@
 import "./List.css";
 export default function List({ activities }) {
   return (
-    <li className="list">
+    <ul className="list">
       {activities.map((activity) => (
-        <li>{activity.activity}</li>
+        <li key={activity.key}>{activity.activity}</li>
       ))}
-    </li>
+    </ul>
   );
 }
