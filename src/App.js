@@ -6,6 +6,7 @@ import List from "./components/List/index.js";
 import "./App.css";
 
 function App() {
+  /*set initial sate for activities and weather*/
   const initialActivities = [];
   const [activities, setActivities] = useLocalStorageState("activities", {
     defaultValue: initialActivities,
@@ -13,6 +14,7 @@ function App() {
   const initialWeather = { temperature: "0", condition: "" };
   const [weather, setWeather] = useState(initialWeather);
 
+  /*render the list from list component add new activity*/
   function handleAddActivity(data) {
     setActivities([
       ...activities,
@@ -25,11 +27,12 @@ function App() {
       },
     ]);
   }
-
+  /* filter the list according to the weather condition*/
   const filterActivities = activities.filter(
     (activity) => activity.isForGoodWeather === weather.isGoodWeather
   );
 
+  /* fetch data from weather API and use useEffect to fetch it every 5 second*/
   useEffect(() => {
     async function fetchWeather() {
       try {
@@ -49,6 +52,7 @@ function App() {
     };
   }, []);
 
+  /*delete activity */
   function handleDeleteActivity(id) {
     const newActivities = activities.filter((activity) => activity.id !== id);
     setActivities(newActivities);
